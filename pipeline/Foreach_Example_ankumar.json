@@ -1,0 +1,88 @@
+{
+	"name": "Foreach_Example_ankumar",
+	"properties": {
+		"description": "Create a pipeline name 'Foreach_Example' to copy the Customer & Customer address table data into ADLS using the one copy activity within one pipeline.",
+		"activities": [
+			{
+				"name": "Customer and Customer Address Using Loop",
+				"description": "copy the Customer & Customer address table data into ADLS using the one copy activity within one pipeline.",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@createArray('Customer', 'CustomerAddress')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SQLDSGeneric_ankumar",
+									"type": "DatasetReference",
+									"parameters": {
+										"Schema": "saleslt",
+										"TableName": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "CSVDSGeneric_ankumar",
+									"type": "DatasetReference",
+									"parameters": {
+										"folderPath": "Customer"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-07-15T15:11:32Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,24 @@
+{
+	"name": "RestAPIDS_Q2_ankumar",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestAPILS_Q2_ankumar",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"countryName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().countryName",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

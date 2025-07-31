@@ -1,0 +1,26 @@
+{
+	"name": "SQLDSGeneric_ankumar",
+	"properties": {
+		"description": "SQL DS with parameters",
+		"linkedServiceName": {
+			"referenceName": "SQLLSankumar",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Schema": {
+				"type": "string"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": "Customer"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

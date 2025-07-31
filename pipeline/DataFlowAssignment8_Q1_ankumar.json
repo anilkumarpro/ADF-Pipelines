@@ -1,0 +1,36 @@
+{
+	"name": "DataFlowAssignment8_Q1_ankumar",
+	"properties": {
+		"description": "Create a pipeline to copy the customer data from csv file to SQL where the customer id is an even number.",
+		"activities": [
+			{
+				"name": "Pipeline for Data Flow",
+				"description": "Create a pipeline to copy the customer data from csv file to SQL where the customer id is an even number.",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "ADFDataFlowAssigment8_1",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-07-24T11:25:27Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

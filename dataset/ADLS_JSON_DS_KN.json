@@ -1,0 +1,19 @@
+{
+	"name": "ADLS_JSON_DS_KN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_LS_KN",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "landing"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "EmployeeSQLDS_ankumar",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "EmployeeSQLLS_ankumar",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "empschema",
+			"table": "emptable"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

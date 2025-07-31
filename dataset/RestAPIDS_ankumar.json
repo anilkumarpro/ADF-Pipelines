@@ -1,0 +1,13 @@
+{
+	"name": "RestAPIDS_ankumar",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestAPILS_ankumar",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,98 @@
+{
+	"name": "DFAssignment8_3_ankumar",
+	"properties": {
+		"description": "Create a pipeline to read the Customer table data from SQL and CustomerAddress data from CSV, join both of them,\nand then save the result where customer id> 1000 & Customer id <2000 in ascending order as a Parquet file.\n",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SQL_DB_Customer_DS",
+						"type": "DatasetReference"
+					},
+					"name": "CustomerTableDataFromSQL",
+					"description": "CustomerTableDataFromSQL"
+				},
+				{
+					"dataset": {
+						"referenceName": "DFCustomerAddressCSV_DS_ankumar",
+						"type": "DatasetReference"
+					},
+					"name": "CustomerAddressFromCSV",
+					"description": "CustomerAddressFromCSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DFParquetDS_ankumar",
+						"type": "DatasetReference"
+					},
+					"name": "OPinParquetFile",
+					"description": "Result set as as a Parquet file"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinCustCustAddress",
+					"description": "Joining the data for Customer from SQL and Customer address from CSV"
+				},
+				{
+					"name": "Filteringtheresult"
+				},
+				{
+					"name": "SortAscendingOrder",
+					"description": "Sorting in Ascending Order"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as integer,",
+				"          NameStyle as boolean,",
+				"          Title as string,",
+				"          FirstName as string,",
+				"          MiddleName as string,",
+				"          LastName as string,",
+				"          Suffix as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string,",
+				"          EmailAddress as string,",
+				"          Phone as string,",
+				"          PasswordHash as string,",
+				"          PasswordSalt as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> CustomerTableDataFromSQL",
+				"source(output(",
+				"          CustomerID as integer,",
+				"          AddressID as string,",
+				"          AddressType as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CustomerAddressFromCSV",
+				"CustomerTableDataFromSQL, CustomerAddressFromCSV join(CustomerTableDataFromSQL@CustomerID == CustomerAddressFromCSV@CustomerID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinCustCustAddress",
+				"JoinCustCustAddress filter(CustomerTableDataFromSQL@CustomerID>1000 && CustomerTableDataFromSQL@CustomerID<200000) ~> Filteringtheresult",
+				"Filteringtheresult sort(asc(CustomerTableDataFromSQL@CustomerID, true)) ~> SortAscendingOrder",
+				"SortAscendingOrder sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> OPinParquetFile"
+			]
+		}
+	}
+}

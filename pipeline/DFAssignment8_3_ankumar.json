@@ -1,0 +1,36 @@
+{
+	"name": "DFAssignment8_3_ankumar",
+	"properties": {
+		"description": "Create a pipeline to read the Customer table data from SQL and CustomerAddress data from CSV, join both of them,\nand then save the result where customer id> 1000 & Customer id <2000 in ascending order as a Parquet file.\n",
+		"activities": [
+			{
+				"name": "DFParquetFile",
+				"description": "Create a pipeline to read the Customer table data from SQL and CustomerAddress data from CSV, join both of them,\nand then save the result where customer id> 1000 & Customer id <2000 in ascending order as a Parquet file.\n",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DFAssignment8_3_ankumar",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-07-25T09:01:08Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "DFJSONDS_ankumar",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DFJSONLS_ankumar",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "DataFlowFiles-Assignment8",
+				"fileSystem": "landing"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

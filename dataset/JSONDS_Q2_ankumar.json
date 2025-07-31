@@ -1,0 +1,29 @@
+{
+	"name": "JSONDS_Q2_ankumar",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "JSONLS_Q2_ankumar",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"countryName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().countryName",
+					"type": "Expression"
+				},
+				"folderPath": "REST API",
+				"fileSystem": "landing"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

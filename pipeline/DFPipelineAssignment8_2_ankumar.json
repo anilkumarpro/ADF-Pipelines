@@ -1,0 +1,36 @@
+{
+	"name": "DFPipelineAssignment8_2_ankumar",
+	"properties": {
+		"description": "Create a pipeline to join the two files (Customer, Customer Address) based on customer id and save the result as a JSON file.",
+		"activities": [
+			{
+				"name": "CustCustAddToJSON",
+				"description": "Create a pipeline to join the two files (Customer, Customer Address) based on customer id and save the result as a JSON file.",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DFAssignment8_2_ankumar",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-07-24T12:08:24Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

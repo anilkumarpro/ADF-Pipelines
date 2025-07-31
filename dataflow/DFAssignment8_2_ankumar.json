@@ -1,0 +1,86 @@
+{
+	"name": "DFAssignment8_2_ankumar",
+	"properties": {
+		"description": "Create a pipeline to join the two files (Customer, Customer Address) based on customer id and save the result as a JSON file.",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DataFlowCSVCustomerDS_ankumar",
+						"type": "DatasetReference"
+					},
+					"name": "ImportingCustomerCSV",
+					"description": "Customer CSV dataset"
+				},
+				{
+					"dataset": {
+						"referenceName": "DFCustomerAddressCSV_DS_ankumar",
+						"type": "DatasetReference"
+					},
+					"name": "ImportingCustomerAddressCSV",
+					"description": "Customer Address CSV dataset"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DFJSONDS_ankumar",
+						"type": "DatasetReference"
+					},
+					"name": "CustCustAddJoin",
+					"description": "Result set after joining 2 tables"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoiningCustomernCustomerAddress"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as short,",
+				"          NameStyle as string,",
+				"          Title as string,",
+				"          FirstName as string,",
+				"          MiddleName as string,",
+				"          LastName as string,",
+				"          Suffix as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string,",
+				"          EmailAddress as string,",
+				"          Phone as string,",
+				"          PasswordHash as string,",
+				"          PasswordSalt as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ImportingCustomerCSV",
+				"source(output(",
+				"          CustomerID as short,",
+				"          AddressID as string,",
+				"          AddressType as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ImportingCustomerAddressCSV",
+				"ImportingCustomerCSV, ImportingCustomerAddressCSV join(ImportingCustomerCSV@CustomerID == ImportingCustomerAddressCSV@CustomerID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoiningCustomernCustomerAddress",
+				"JoiningCustomernCustomerAddress sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CustCustAddJoin"
+			]
+		}
+	}
+}

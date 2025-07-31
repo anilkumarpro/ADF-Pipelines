@@ -1,0 +1,58 @@
+{
+	"name": "ADFRestAPIAss10-Q1-ankumar",
+	"properties": {
+		"description": "Create a pipeline to fetch the All countries data from Rest API (https://restcountries.com/v3.1/all) and save it as parquet file in ADL",
+		"activities": [
+			{
+				"name": "RestAPItoParquetFile",
+				"description": "Create a pipeline to fetch the All countries data from Rest API (https://restcountries.com/v3.1/all) and save it as parquet file in ADL",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "RestAPIDS_ankumar",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "APIToParquetDS_ankumar",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-07-30T17:44:16Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

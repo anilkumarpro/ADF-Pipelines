@@ -1,0 +1,67 @@
+{
+	"name": "ADFDataFlowAssigment8_1",
+	"properties": {
+		"description": "Create a pipeline to copy the customer data from csv file to SQL where the customer id is an even number.",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DataFlowCSVCustomerDS_ankumar",
+						"type": "DatasetReference"
+					},
+					"name": "ImportingCSVfile"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DataFlowSQLCustomerDS_ankumar",
+						"type": "DatasetReference"
+					},
+					"name": "DumpingDataToSQLTable",
+					"description": "Even Customer ID data added ti SQL Table"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FilteringEvenCustomerID",
+					"description": "Filtering the Customer Id based on even number"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as short,",
+				"          NameStyle as string,",
+				"          Title as string,",
+				"          FirstName as string,",
+				"          MiddleName as string,",
+				"          LastName as string,",
+				"          Suffix as string,",
+				"          CompanyName as string,",
+				"          SalesPerson as string,",
+				"          EmailAddress as string,",
+				"          Phone as string,",
+				"          PasswordHash as string,",
+				"          PasswordSalt as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ImportingCSVfile",
+				"ImportingCSVfile filter(CustomerID%2 ==0) ~> FilteringEvenCustomerID",
+				"FilteringEvenCustomerID sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> DumpingDataToSQLTable"
+			]
+		}
+	}
+}

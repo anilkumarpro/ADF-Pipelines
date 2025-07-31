@@ -1,0 +1,36 @@
+{
+	"name": "DFAssignment8_4_ankumar",
+	"properties": {
+		"description": "create a pipeline to read the Product CSV file, and calculate the highest listPrice of any product under each productcategory.\nEnsure that product shouldn't be of blue in color and save the result as CSV file inside ProductResult folder.",
+		"activities": [
+			{
+				"name": "ProductResultFolder",
+				"description": "create a pipeline to read the Product CSV file, and calculate the highest listPrice of any product under each productcategory.\nEnsure that product shouldn't be of blue in color and save the result as CSV file inside ProductResult folder.",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DFAssignment8_4_ankumar",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-07-25T09:33:14Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

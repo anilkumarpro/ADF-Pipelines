@@ -1,0 +1,74 @@
+{
+	"name": "DFAssignment8_4_ankumar",
+	"properties": {
+		"description": "create a pipeline to read the Product CSV file, and calculate the highest listPrice of any product under each productcategory.\nEnsure that product shouldn't be of blue in color and save the result as CSV file inside ProductResult folder.\n",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DFProductCSVDS_ankumar",
+						"type": "DatasetReference"
+					},
+					"name": "InputFromProductCSV",
+					"description": "Product CSV data"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DFProdResultFolderCSVDS",
+						"type": "DatasetReference"
+					},
+					"name": "ProductResultFolder",
+					"description": "Result set added in ProductResult folder"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ColorNotBlue",
+					"description": "Ensuring that product shouldn't be of blue in color "
+				},
+				{
+					"name": "HighestListPrice",
+					"description": "Calculating highest list price by productcategory"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ProductID as string,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          Color as string,",
+				"          StandardCost as string,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          Weight as string,",
+				"          ProductCategoryID as string,",
+				"          ProductModelID as string,",
+				"          SellStartDate as string,",
+				"          SellEndDate as string,",
+				"          DiscontinuedDate as string,",
+				"          ThumbNailPhoto as string,",
+				"          ThumbnailPhotoFileName as string,",
+				"          rowguid as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> InputFromProductCSV",
+				"InputFromProductCSV filter(Color!='Blue') ~> ColorNotBlue",
+				"ColorNotBlue aggregate(groupBy(ProductCategoryID),",
+				"     MaxListPrice = max(ListPrice)) ~> HighestListPrice",
+				"HighestListPrice sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> ProductResultFolder"
+			]
+		}
+	}
+}

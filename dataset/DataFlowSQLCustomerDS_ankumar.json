@@ -1,0 +1,17 @@
+{
+	"name": "DataFlowSQLCustomerDS_ankumar",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataFlowSQLCustomerLS_ankumar",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "saleslt",
+			"table": "CustomerDF"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
